@@ -31,3 +31,12 @@ body {
     text-wrap: balance;
   }
 }
+
+
+@font-face {
+  font-family: 'Deltha';
+  src: url('/fonts/deltha/fonnts.com-Deltha.otf') format('opentype'),
+       url('/fonts/deltha/fonnts.com-Deltha.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
