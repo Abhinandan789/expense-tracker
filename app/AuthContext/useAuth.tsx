@@ -14,7 +14,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         const timeout = setTimeout(() => {
             if (!user) {
                 try {
-                    router.push('/auth/signIn');
+                    router.push('/handler/sign-in');
                 } catch (err) {
                     setError('Navigation failed. Please try again.');
                 }
