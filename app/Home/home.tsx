@@ -1,16 +1,18 @@
 import React from 'react'
-
-import Navbar from './navbar';
+import Navbar from './Navbar';
 import Main from './mainPage';
+import VantaBackground from './uiComponents/VantaBackground';
 
-export const home = () => {
+const Home = () => {
   return (
-    <div className='max-w-full  max-h-max'>
-        <Navbar />
+    <div className='relative min-h-screen'>
+      <VantaBackground />
+      <div className='relative z-10 max-w-full max-h-max'>
+        <Navbar />  
         <Main />
+      </div>
     </div>
   )
 }
 
-
-export default home;
+export default Home;

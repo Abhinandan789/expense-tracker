@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Expense Tracker
+
+A simple and efficient expense tracking application built with Next.js, Firebase, and Stack Auth.
+
+## Features
+
+- User authentication
+- Add, edit, and delete expenses
+- Categorize expenses
+- Real-time updates
+- Responsive design
+
+## Technologies Used
+
+- Next.js
+- Firebase
+- Stack Auth [https://www.stack-auth.com/]
+- Tailwind CSS
+- Material UI
+- Framer Motion
+- VantaJS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v14 or later)
+- npm or yarn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```
+   git clone https://github.com/Abhinandan789/expense-tracker.git
+   cd expense-tracker
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-## Learn More
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory with the following variables:
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   # Firebase
+   NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-auth-domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   # Stack Auth
+   NEXT_PUBLIC_STACK_PROJECT_ID=your-project-id
+   NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=your-publishable-client-key
+   STACK_SECRET_SERVER_KEY=your-secret-server-key
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   Replace the placeholders with your actual Firebase and Stack Auth credentials.
 
-## Deploy on Vercel
+4. Run the development server:
+   ```
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Stack Auth Setup
+
+1. Run Stack's installation wizard:
+   ```
+   npx @stackframe/init-stack@latest
+   ```
+
+2. Create an account on [Stack Auth dashboard](https://www.stack-auth.com/dashboard) and set up a new project.
+
+3. Add the Stack Auth environment variables to your `.env.local` file as shown in the Installation section.
+
+## Deployment
+
+1. Push your code to a GitHub repository.
+
+2. Deploy on Vercel:
+   - Connect your GitHub repository to Vercel.
+   - Add the environment variables in the Vercel project settings.
+   - Deploy the project.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.

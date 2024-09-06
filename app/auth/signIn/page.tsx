@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-// import { useTheme } from 'next-themes';
-import { SignIn } from '@stackframe/stack'; // Assuming you are using the built-in sign-in component
 
+import { SignIn } from '@stackframe/stack'; 
 const SignInPage = () => {
   
 

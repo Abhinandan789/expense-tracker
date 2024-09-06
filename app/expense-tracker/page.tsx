@@ -170,26 +170,29 @@
 import React from 'react';
 
 //components
-import GradualSpacing from '../styledComponents/GradualSpacing';
+import GradualSpacing from './styledComponents/GradualSpacing';
 import Expenses from './Components/ExpenseItems';
 import Inputs from './Components/Inputs'
-import BurgerMenu  from '../styledComponents/BurgerMenu';
+import BurgerMenu  from './Components/BurgerMenu';
 
 //Auth 
 import AuthGuard from '../AuthContext/useAuth'
 
-import User from '../userInfo/page';
+// import User from '../userInfo/page';
+import Background from './styledComponents/Background';
 
 export default function Home() {
   return (
     <AuthGuard >
-      <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-white">
+      <Background />
+      <main className="flex min-h-screen flex-col items-center justify-between p-4 ">
         <BurgerMenu />
-        <div className="bg-white border-l-pink-900 z-10 max-w-90 max-w-3xl items-center justify-between font-mono text-sm">
+        <div className="border-l-pink-900 z-10 max-w-90 max-w-3xl items-center justify-between font-mono text-sm">
           <GradualSpacing text="Expense Tracker" />
           {/* <User />  */}
+          
 
-          <div className="bg-white border  p-4 rounded-lg flex flex-col sm:h-[80vh] h-[80vh] ">
+          <div className=" border  p-4 rounded-lg flex flex-col sm:h-[80vh] h-[80vh] ">
 
             <Inputs />
 

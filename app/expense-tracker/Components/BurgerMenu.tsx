@@ -4,9 +4,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 import Link from 'next/link';
 
-//user info 
-// import { User } from '@stackframe/stack';
-import User from '../userInfo/page';
+import User from '../../userInfo/page';
+
+
 const variants = {
   open: { opacity: 1, x: 0 },
   closed: { opacity: 0, x: "-100%" },
@@ -16,7 +16,7 @@ export const BurgerMenu:React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="fixed top-0 left-0 z-50">
+    <div className="fixed top-0 left-0 z-50 w-8">
       <button 
         onClick={() => setIsOpen((isOpen) => !isOpen)}
         className="absolute top-4 left-4 p-2 rounded text-white"

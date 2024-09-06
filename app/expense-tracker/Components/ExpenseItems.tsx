@@ -1,39 +1,78 @@
 import React, { useState, useEffect } from 'react';
 
 //firebase imports
-import { collection, addDoc, onSnapshot, deleteDoc, doc, query } from "firebase/firestore";
+import { collection, addDoc, updateDoc, onSnapshot, deleteDoc, query, doc } from "firebase/firestore";
 import { db } from '../../Firebase/firebase';
 
 //MUI styled components
-import Skeleton from '../../styledComponents/SkeletonItems'
+import Skeleton from '../styledComponents/SkeletonItems'
 import ToggleButton from '@mui/material/ToggleButton';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { useUser } from '@stackframe/stack';
+import EditItemModal from './EditItemModal';
+
 
 
 interface Data {
     name: string;
     amount: number;
-    id?: string | number;
+    type: string;
+    id: string;
 }
 
 export const ExpenseItems = () => {
+    const user = useUser();
     const [items, setItems] = useState<Data[]>([]);
     const [loading, setLoading] = useState<boolean>(true);  // Loading state
     const [total, setTotal] = useState<number>(0);
 
-    const [showDescription, setShowDescription] = useState<number | null>(null);
+    //const [editingItemId, setEditingItemId] = useState<string | null>(null);
+    const [editingItem, setEditingItem] = useState<Data | null>(null);
 
 
-    const toggleDescription = (e: number): void => {
-        console.log(e);
+    const handleEditClick = (itemId: string) => {
+        const itemToEdit = items.find(item => item.id === itemId);
+        if (itemToEdit) {
+            setEditingItem(itemToEdit);
+        }
+        console.log("Edit clicked for item:", itemId);
+    };
+    
+
+    const handleCloseModal = () => {
+        setEditingItem(null);
     }
+
+    const handleUpdateItem = async (updatedItem: Data) => {
+        if (!user || !updatedItem.id) return;
+        try {
+            const itemRef = doc(db, `users/${user.id}/items`, updatedItem.id);
+
+            const firebaseItem = {
+                name: updatedItem.name,
+                amount: updatedItem.amount,
+                type: updatedItem.type
+            };
+
+            await updateDoc(itemRef, firebaseItem);
+            setEditingItem(null);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+        }
+    };
+
+    useEffect(() => {
+        console.log()
+    }, [editingItem]);
+
 
     // READ DATA FROM FIREBASE
     useEffect(() => {
-        const q = query(collection(db, 'items'));
+        if (!user) return;
+
+        const q = query(collection(db, `users/${user.id}/items`));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             let itemsArray: Data[] = [];
 
@@ -41,6 +80,7 @@ export const ExpenseItems = () => {
                 itemsArray.push({
                     name: doc.data().name,
                     amount: doc.data().amount,
+                    type: doc.data().type.toLowerCase(),
                     id: doc.id,
                 });
             });
@@ -59,62 +99,73 @@ export const ExpenseItems = () => {
         });
 
         return unsubscribe;
-    }, []);
+    }, [user]);
 
     // DELETE DATA FROM FIREBASE
     const deleteItem = async (id: string) => {
-        await deleteDoc(doc(db, 'items', id));
+        if (!user) return;
+
+        await deleteDoc(doc(db, `users/${user.id}/items`, id));
     }
     return (
         <>
-            <div className="flex-grow overflow-auto mb-4">
-                <ul>
-                    {/* SKELETON STATE ADDING HERE  */}
-                    {loading ? (
-                        Array.from(new Array(6)).map((_, index) => (
-                            <Skeleton />
-                        ))
-                    ) : (
-                        items.length < 1 ? (
-                            <h2 className="text-black text-center sm:text-4xl mt-9">{`<---------Add Expenses--------->`}</h2>
+            <div className="flex-grow overflow-auto mb-4 w-full">
+                <table className="w-full border-collapse">
+                    <thead>
+                        <tr className="bg-slate-950 text-white">
+                            <th className="p-2 text-left">Name</th>
+                            <th className="p-2 text-left">Category</th>
+                            <th className="p-2 text-right">Amount</th>
+                            <th className="p-2 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loading ? (
+                            <tr>
+                                <td colSpan={4}>
+                                    <Skeleton />
+                                </td>
+                            </tr>
+                        ) : items.length < 1 ? (
+                            <tr>
+                                <td colSpan={4} className="text-center p-4 text-slate-500">
+                                    No expenses added yet
+                                </td>
+                            </tr>
                         ) : (
                             items.map((item, i) => (
-                                <li key={i} className='my-2 w-full bg-slate-950 rounded'>
-                                    <div className='p-2 w-full flex justify-between items-center'>
-                                        <div className='mr-2 '>
-                                            <span className='capitalize text-white sm:text-lg flex items-center whitespace-nowrap'>
-                                                {item.name}
-                                                <button
-                                                    type="button"
-                                                    className='ml-2 text-sm'
-                                                    onClick={() => toggleDescription(i)}>
-                                                    {showDescription === i ? <ArrowDropUpIcon /> : <ArrowRightIcon />}
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <div className='flex items-center gap-7 whitespace-nowrap'>
-                                            <span className='sm:text-lg mr-2 whitespace-nowrap'>₹{item.amount}</span>
-                                            <ToggleButton
-                                                value=""
-                                                className="border-l-2 border-slate-900 hover:bg-slate-800 p-2"
-                                                onClick={() => deleteItem(item.id as string)}
-                                            >
-                                                <DeleteSweepIcon className='text-white' />
-                                            </ToggleButton>
-                                        </div>
-                                    </div>
-                                </li>
+                                <tr key={i} className={`border-b bg-slate-950`}>
+                                    <td className="p-2">{item.name}</td>
+                                    <td className="p-2 capitalize">{item.type}</td>
+                                    <td className="p-2 text-right">₹{item.amount}</td>
+                                    <td className="p-2 text-center">
+                                        <button onClick={() => handleEditClick(item.id)} className="mr-2 text-blue-500 hover:text-blue-700">
+                                            <EditIcon />
+                                        </button>
+                                        <button onClick={() => deleteItem(item.id)} className="text-red-500 hover:text-red-700">
+                                            <DeleteSweepIcon />
+                                        </button>
+                                    </td>
+                                </tr>
                             ))
-                        )
-                    )}
-                </ul>
+                        )}
+                    </tbody>
+                </table>
             </div>
-            {items.length < 1 ? ('') :
+            {items.length > 0 && (
                 <div className='text-white flex justify-between items-center p-3 bg-slate-950 rounded'>
                     <span className='sm:text-xl'>Total</span>
                     <span className='sm:text-xl'>₹{total}</span>
                 </div>
-            }
+            )}
+            {editingItem && (
+                <EditItemModal 
+                    item={editingItem}
+                    isOpen={true}
+                    onClose={handleCloseModal}
+                    onUpdate={handleUpdateItem}
+                />
+            )}
         </>
     )
 }

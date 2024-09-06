@@ -1,31 +1,37 @@
 'use client'
 
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@stackframe/stack';
-// import Loading from './loading.tsx'
 
 const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const user = useUser();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
-
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!user) {
-            // If the user is not logged in, redirect to the login page
-            router.push('/auth/signIn');
-        } else {
-            setIsLoading(false);
-        }
+        const timeout = setTimeout(() => {
+            if (!user) {
+                try {
+                    router.push('/auth/signIn');
+                } catch (err) {
+                    setError('Navigation failed. Please try again.');
+                }
+            } else {
+                setIsLoading(false);
+            }
+        }, 3000); // 3 second timeout
+
+        return () => clearTimeout(timeout);
     }, [user, router]);
 
-    if (!user) {
-        // You could return a loading spinner here instead
-        return null; 
+    if (error) {
+        return <div>Error: {error}</div>;
     }
-    if (isLoading) {
-        return <div>Loading...</div>; // Or use a spinner component
+
+    if (!user || isLoading) {
+        return <div>Loading...</div>; // Ideally, use a spinner component
     }
 
     return <>{children}</>;
