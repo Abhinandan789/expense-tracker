@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuOpenRoundedIcon from '@mui/icons-material/MenuOpenRounded';
 import Link from 'next/link';
 
-import User from './userInfo/page';
+import User from './userInfo';
 
 
 const variants = {

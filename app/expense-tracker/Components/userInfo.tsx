@@ -3,7 +3,7 @@
 import React from 'react';
 import { UserButton, useUser } from '@stackframe/stack';
 
-const UserInfoPage = () => {
+const UserInfo = () => {
     const user = useUser({or : "redirect"});
     const loggedIn = user !== null;
 
@@ -39,4 +39,4 @@ const UserInfoPage = () => {
     );
 };
 
-export default UserInfoPage;
+export default UserInfo;
