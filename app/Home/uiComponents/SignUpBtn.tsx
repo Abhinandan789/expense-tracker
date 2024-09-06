@@ -21,7 +21,6 @@ const SignUpButton: React.FC = () => {
       "
     >
       <Link 
-      //dapat mag error
         href="/auth/signUp"
         className="
           w-full h-full flex items-center justify-start

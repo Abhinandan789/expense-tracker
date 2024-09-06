@@ -12,7 +12,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            //bakit dapat mag error?
+            //b
             if (!user) {
                 try {
                     router.push('/auth/signIn');
