@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
     }, []);
 
     return (
-        <div className='flex flex-row justify-between p-2 text-black bg-transparent'>
+        <div className='flex flex-row justify-between p-2 text-black sm:bg-transparent'>
             <div className="logo font-deltha flex  ">
                 <span className='text-sm'>Expense</span>
                 <span className='text-sm'> <span className='text-xl'>T</span>racker</span>

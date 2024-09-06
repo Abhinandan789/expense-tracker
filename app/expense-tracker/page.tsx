@@ -178,7 +178,7 @@ import BurgerMenu  from './Components/BurgerMenu';
 //Auth 
 import AuthGuard from '../AuthContext/useAuth'
 
-// import User from '../userInfo/page';
+// import User from '../className/page';
 import Background from './styledComponents/Background';
 
 export default function Home() {
