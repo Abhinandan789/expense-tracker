@@ -8,6 +8,5 @@ export const stackServerApp = new StackServerApp({
   urls:{
     signIn : '/auth/signIn',
     signUp : '/auth/signUp',
-    accountSettings: '/baka'
   }
 });
