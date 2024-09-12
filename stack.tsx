@@ -18,8 +18,8 @@ export const stackServerApp = new StackServerApp({
     signUp: "/auth/signUp",
     accountSettings: "/auth/account",
     //security: "/auth/account/security",
-    afterSignIn: "/home",
-    afterSignUp: "/home",
+    afterSignIn: "/expense-tracker",
+    afterSignUp: "/",
   }
 
 });
