@@ -15,7 +15,7 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             //b
             if (!user) {
                 try {
-                    router.push('/handler/signin');
+                    router.push('/auth/signIn');
                 } catch (err) {
                     setError('Navigation failed. Please try again.');
                 }

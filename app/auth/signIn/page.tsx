@@ -1,18 +1,35 @@
+// @ts-nocheck
 'use client';
 
 import React from 'react';
+import { SignIn } from "@stackframe/stack";
 
-import { SignIn } from '@stackframe/stack'; 
-const SignInPage = () => {
-  
-
+export default function CustomSignInPage() {
   return (
-    <div
-      className={` min-h-screen flex items-center justify-center bg-white`}
-    >
-      <SignIn />
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Welcome Back!</h1>
+        <SignIn 
+  //@ts-ignore
+  appearance={{
+    elements: {
+      formButtonPrimary: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300",
+      formFieldInput: "w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+      oauthButton: "w-full mb-2 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-100 transition duration-300",
+    },
+  }}
+  providers={["google","github"]}
+  onSuccess={(user) => {
+    console.log('Signed in successfully', user);
+  }}
+  onError={(error) => {
+    console.error('Login error:', error);
+    console.log('Full error object:', JSON.stringify(error, null, 2));
+    alert(`Login failed: ${error.message}\nError type: ${error.type}\nError code: ${error.code}\nFull error logged in console`);
+  }}
+/>
+
+      </div>
     </div>
   );
-};
-
-export default SignInPage;
+}

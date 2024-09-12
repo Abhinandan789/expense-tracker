@@ -14,8 +14,12 @@ import { StackServerApp } from "@stackframe/stack";
 export const stackServerApp = new StackServerApp({
   tokenStore: "nextjs-cookie",
   urls: {
-    afterSignIn: '/expense-tracker',
-    afterSignUp: '/expense-tracker',
+    signIn: "/auth/signIn",
+    signUp: "/auth/signUp",
+    accountSettings: "/auth/account",
+    //security: "/auth/account/security",
+    afterSignIn: "/home",
+    afterSignUp: "/home",
   }
 
 });
