@@ -21,7 +21,7 @@ const SignUpButton: React.FC = () => {
       "
     >
       <Link 
-        href="/auth/signup"
+        href="/auth/signUp"
         className="
           w-full h-full flex items-center justify-start
           transform translate-x-[30px]
