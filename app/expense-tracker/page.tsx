@@ -185,7 +185,7 @@ export default function Home() {
   return (
     <AuthGuard >
       <Background />
-      <main className="flex min-h-screen flex-col items-center justify-between p-4 ">
+      <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-white">
         <BurgerMenu />
         <div className="border-l-pink-900 z-10 max-w-90 max-w-3xl items-center justify-between font-mono text-sm">
           <GradualSpacing text="Expense Tracker" />
